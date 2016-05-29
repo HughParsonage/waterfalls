@@ -1,0 +1,12 @@
+Package: waterfalls
+Type: Package
+Title: Create waterfall charts using ggplot2 simply
+Version: 0.1.0
+Author: Hugh Parsonage
+Maintainer: Hugh Parsonage <hugh.parsonage+waterfall@gmail.com>
+Description: A not uncommon task for quants is to create `waterfall charts'. There seems to be no simple way to do this in ggplot2 currently. This package contains a single function (waterfall) that simply draws a waterfall chart in a ggplot2 object. Some flexibility is provided, though often the object created will need to be modified through ggplot2's theme.
+License: MIT + file LICENSE
+Imports:
+  ggplot2 (>= 2.0.0),
+LazyData: TRUE
+RoxygenNote: 5.0.1

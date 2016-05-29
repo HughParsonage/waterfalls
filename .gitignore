@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+=======
 # History files
 .Rhistory
 .Rapp.history
@@ -17,3 +23,4 @@ vignettes/*.pdf
 
 # OAuth2 token, see https://github.com/hadley/httr/releases/tag/v0.3
 .httr-oauth
+>>>>>>> 598fe50fd8d5ee6f24a48bcc23e46f84ac2a5a0d
