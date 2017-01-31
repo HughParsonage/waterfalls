@@ -1,7 +1,7 @@
 #' Create waterfall charts
 #'
 #' @name waterfall
-#' @author Based on \code{grattan_waterfall} from the grattan package (\url{https://github.com/HughParsonage/grattan}).
+#' @author Based on \code{grattan_waterfall} from the grattanCharts package (\url{https://github.com/HughParsonage/grattanCharts}).
 #' @param .data a data frame containing two columns, one with the values, the other with the labels
 #' @param values a numeric vector making up the heights of the rectangles in the waterfall
 #' @param labels the labels corresponding to each vector, marked on the x-axis
@@ -27,6 +27,10 @@
 #' @param ggplot_object_name (character) A quoted valid object name to which ggplot layers may be addded after the function has run. Ignored if \code{print} is \code{FALSE}.
 #' @examples
 #' waterfall(values = round(rnorm(5), 1), labels = letters[1:5], calc_total = TRUE)
+#' waterfall(.data = data.frame(category = letters[1:5],
+#'                              value = c(100, -20, 10, 20, 110)), 
+#'           fill_colours = colorRampPalette(c("#1b7cd6", "#d5e6f2"))(5),
+#'           fill_by_sign = FALSE)
 #' @export
 
 
@@ -76,7 +80,7 @@ waterfall <- function(.data = NULL,
        length(values) == length(rect_text_labels)))
     stop("values, labels, fill_colours, and rect_text_labels must all have same length")
   
-  if(rect_width > 1)
+  if (rect_width > 1)
     warning("rect_Width > 1, your chart may look terrible")
   
   number_of_rectangles <- length(values)
@@ -89,15 +93,20 @@ waterfall <- function(.data = NULL,
     grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
   }
   if(fill_by_sign){
+    if (!is.null(fill_colours)){
+      warning("fill_colours is given but fill_by_sign is TRUE so fill_colours will be ignored.")
+    }
     fill_colours <- ifelse(values >= 0,
                            gg_color_hue(2)[2],
                            gg_color_hue(2)[1])
   } else {
-    fill_colours <- gg_color_hue(number_of_rectangles)
+    if (is.null(fill_colours)){
+      fill_colours <- gg_color_hue(number_of_rectangles)
+    }
   }
   
   
-  if (!(grepl("^[lrc]", lines_anchors[1]) && grepl("^[lrc]", lines_anchors[2])))  # left right center
+  if(!(grepl("^[lrc]", lines_anchors[1]) && grepl("^[lrc]", lines_anchors[2])))  # left right center
     stop("lines_anchors must be a pair of any of the following: left, right, centre")
   
   if (grepl("^l", lines_anchors[1]))
