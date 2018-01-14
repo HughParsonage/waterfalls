@@ -23,6 +23,7 @@
 #' @param lines_anchors a character vector of length two specifying the horizontal placement of the drawn lines relative to the preceding and successive rectangles, respectively
 #' @param draw_axis.x (character) one of "none", "behind", "front" whether to draw an x.axis line and whether to draw it behind or in front of the rectangles, default is behind
 #' @param theme_text_family (character) Passed to the \code{text} argument in \code{ggplot2::theme}.
+#' @param scale_y_to_waterfall (logical, default: \code{TRUE}) Should the default range of the y-axis be from the bottom of the lowest pool to the top of the highest? If \code{FALSE}, which was the only option before version 0.1.2, the range of the plot is more balanced around the y-axis.
 #' @param print_plot (logical) Whether or not the plot should be printed. By default, \code{TRUE}, which means it cannot be assigned.
 #' @param ggplot_object_name (character) A quoted valid object name to which ggplot layers may be addded after the function has run. Ignored if \code{print} is \code{FALSE}.
 #' @examples
@@ -54,17 +55,18 @@ waterfall <- function(.data = NULL,
                       linetype = "dashed",
                       draw_axis.x = "behind",
                       theme_text_family = "",
+                      scale_y_to_waterfall = TRUE,
                       print_plot = FALSE,
-                      ggplot_object_name = "mywaterfall"){
+                      ggplot_object_name = "mywaterfall") {
   if(!is.null(.data)){
-    if(ncol(.data) == 2 &&
+    if (ncol(.data) == 2 &&
        sum(
          c("character" %in% sapply(.data, class),
            "factor"    %in% sapply(.data, class),
            "numeric"   %in% sapply(.data, class))
        ) == 2){
-      .data_values <- .data[ ,which(sapply(.data, class) == "numeric")]
-      .data_labels <- .data[ ,which(sapply(.data, class) != "numeric")]
+      .data_values <- .data[ ,which(vapply(.data, is.numeric, logical(1L)))]
+      .data_labels <- .data[ ,which(!vapply(.data, is.numeric, logical(1L)))]
     } else {
       stop(".data should have two columns, one numeric, the other character or factor")
     }
@@ -90,7 +92,7 @@ waterfall <- function(.data = NULL,
   # fill by sign means rectangles' fill colour is given by whether they are going up or down
   gg_color_hue <- function(n) {
     hues = seq(15, 375, length = n + 1)
-    grDevices::hcl(h = hues, l = 65, c = 100)[1:n]
+    grDevices::hcl(h = hues, l = 65, c = 100)[seq_len(n)]
   }
   if(fill_by_sign){
     if (!is.null(fill_colours)){
@@ -123,18 +125,34 @@ waterfall <- function(.data = NULL,
   if (grepl("^r", lines_anchors[2]))
     anchor_right <- rect_width / 2
   
-  if (!calc_total){
-    p <-
-      ggplot2::ggplot(data.frame(x = labels,
-                                 y = values), ggplot2::aes_string(x = "x", y = "y")) +
+  if (!calc_total) {
+    p <- 
+      if (scale_y_to_waterfall) {
+        ggplot2::ggplot(data.frame(x = c(labels, labels),
+                                   y = c(south_edge, north_edge)),
+                        ggplot2::aes_string(x = "x", y = "y")) 
+      } else {
+        ggplot2::ggplot(data.frame(x = labels, y = values),
+                        ggplot2::aes_string(x = "x", y = "y"))
+      }
+    p <- p +
       ggplot2::geom_blank() +
       ggplot2::theme(axis.title = ggplot2::element_blank())
   } else {
     p <-
-      ggplot2::ggplot(data.frame(x = c(labels, total_axis_text),
-                                 y = c(values, north_edge[number_of_rectangles])
-      ),
-      ggplot2::aes_string(x = "x", y = "y")) +
+      if (scale_y_to_waterfall) {
+        ggplot2::ggplot(data.frame(x = c(labels, total_axis_text,
+                                         labels, total_axis_text),
+                                   y = c(south_edge, north_edge,
+                                         south_edge[number_of_rectangles],
+                                         north_edge[number_of_rectangles])),
+                        ggplot2::aes_string(x = "x", y = "y"))
+      } else {
+        ggplot2::ggplot(data.frame(x = c(labels, total_axis_text),
+                                   y = c(values, north_edge[number_of_rectangles])),
+                        ggplot2::aes_string(x = "x", y = "y"))
+      } 
+    p <- p +
       ggplot2::geom_blank() +
       ggplot2::theme(axis.title = ggplot2::element_blank())
   }

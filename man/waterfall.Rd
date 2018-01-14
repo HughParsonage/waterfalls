@@ -13,7 +13,8 @@ waterfall(.data = NULL, values, labels, rect_text_labels = values,
   fill_by_sign = TRUE, rect_width = 0.7, rect_border = "black",
   draw_lines = TRUE, lines_anchors = c("right", "left"),
   linetype = "dashed", draw_axis.x = "behind", theme_text_family = "",
-  print_plot = FALSE, ggplot_object_name = "mywaterfall")
+  scale_y_to_waterfall = TRUE, print_plot = FALSE,
+  ggplot_object_name = "mywaterfall")
 }
 \arguments{
 \item{.data}{a data frame containing two columns, one with the values, the other with the labels}
@@ -58,6 +59,8 @@ waterfall(.data = NULL, values, labels, rect_text_labels = values,
 
 \item{theme_text_family}{(character) Passed to the \code{text} argument in \code{ggplot2::theme}.}
 
+\item{scale_y_to_waterfall}{(logical, default: \code{TRUE}) Should the default range of the y-axis be from the bottom of the lowest pool to the top of the highest? If \code{FALSE}, which was the only option before version 0.1.2, the range of the plot is more balanced around the y-axis.}
+
 \item{print_plot}{(logical) Whether or not the plot should be printed. By default, \code{TRUE}, which means it cannot be assigned.}
 
 \item{ggplot_object_name}{(character) A quoted valid object name to which ggplot layers may be addded after the function has run. Ignored if \code{print} is \code{FALSE}.}
@@ -75,4 +78,3 @@ waterfall(.data = data.frame(category = letters[1:5],
 \author{
 Based on \code{grattan_waterfall} from the grattanCharts package (\url{https://github.com/HughParsonage/grattanCharts}).
 }
-
