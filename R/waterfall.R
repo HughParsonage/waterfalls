@@ -58,29 +58,54 @@ waterfall <- function(.data = NULL,
                       scale_y_to_waterfall = TRUE,
                       print_plot = FALSE,
                       ggplot_object_name = "mywaterfall") {
-  if(!is.null(.data)){
-    if (ncol(.data) == 2 &&
-       sum(
-         c("character" %in% sapply(.data, class),
-           "factor"    %in% sapply(.data, class),
-           "numeric"   %in% sapply(.data, class))
-       ) == 2){
-      .data_values <- .data[ ,which(vapply(.data, is.numeric, logical(1L)))]
-      .data_labels <- .data[ ,which(!vapply(.data, is.numeric, logical(1L)))]
-    } else {
-      stop(".data should have two columns, one numeric, the other character or factor")
+  if (!is.null(.data)) {
+    
+    if (!is.data.frame(.data)) {
+      stop("`.data` was a ", class(.data)[1], ", but must be a data.frame.")
     }
-    if(!missing(values) && !missing(labels))
+    
+    if (ncol(.data) < 2L) {
+      stop("`.data` had fewer than two columns, yet two are required: labels and values.")
+    }
+    
+    dat <- as.data.frame(.data)
+    char_cols <- vapply(dat, is.character, FALSE)
+    factor_cols <- vapply(dat, is.factor, FALSE)
+    num_cols <- vapply(dat, is.numeric, FALSE)
+    
+    if (!xor(num_cols[1], num_cols[2]) ||
+        sum(char_cols[1:2], factor_cols[1:2], num_cols[1:2]) != 2L) {
+      const_width_name <- function(noms) {
+        max_width <- max(nchar(noms))
+        formatC(noms, width = max_width, align = "right")
+      }
+      
+      stop("`.data` did not contain exactly one numeric column and exactly one character or factor ",
+           "column in its first two columns.\n\t", 
+           "1st column: '", names(dat)[1], "'\t", sapply(dat, class)[1], "\n\t",
+           "2nd column: '", names(dat)[2], "'\t", sapply(dat, class)[2])
+    }
+    
+    if (num_cols[1L]) {
+      .data_values <- .subset2(dat, 1L)
+      .data_labels <- .subset2(dat, 2L)
+    } else {
+      .data_values <- .subset2(dat, 2L)
+      .data_labels <- .subset2(dat, 1L)
+    }
+    
+    if (!missing(values) && !missing(labels)) {
       warning(".data and values and labels supplied, .data ignored")
-    else {
+    } else {
       values <- .data_values
       labels <- as.character(.data_labels)
     }
   }
   
-  if(!(length(values) == length(labels) &&
-       length(values) == length(rect_text_labels)))
+  if (!(length(values) == length(labels) &&
+        length(values) == length(rect_text_labels))) {
     stop("values, labels, fill_colours, and rect_text_labels must all have same length")
+  }
   
   if (rect_width > 1)
     warning("rect_Width > 1, your chart may look terrible")
