@@ -76,14 +76,17 @@ waterfall <- function(.data = NULL,
     if (!xor(num_cols[1], num_cols[2]) ||
         sum(char_cols[1:2], factor_cols[1:2], num_cols[1:2]) != 2L) {
       const_width_name <- function(noms) {
+        if (is.data.frame(noms)) {
+          noms <- names(noms)
+        }
         max_width <- max(nchar(noms))
-        formatC(noms, width = max_width, align = "right")
+        formatC(noms, width = max_width)
       }
       
       stop("`.data` did not contain exactly one numeric column and exactly one character or factor ",
            "column in its first two columns.\n\t", 
-           "1st column: '", names(dat)[1], "'\t", sapply(dat, class)[1], "\n\t",
-           "2nd column: '", names(dat)[2], "'\t", sapply(dat, class)[2])
+           "1st column: '", const_width_name(dat)[1], "'\t", sapply(dat, class)[1], "\n\t",
+           "2nd column: '", const_width_name(dat)[2], "'\t", sapply(dat, class)[2])
     }
     
     if (num_cols[1L]) {
