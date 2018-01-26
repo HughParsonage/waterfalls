@@ -17,7 +17,7 @@ waterfall(.data = NULL, values, labels, rect_text_labels = values,
   ggplot_object_name = "mywaterfall")
 }
 \arguments{
-\item{.data}{a data frame containing two columns, one with the values, the other with the labels}
+\item{.data}{a \code{data.frame} containing two columns, one with the values, the other with the labels}
 
 \item{values}{a numeric vector making up the heights of the rectangles in the waterfall}
 
@@ -27,11 +27,11 @@ waterfall(.data = NULL, values, labels, rect_text_labels = values,
 
 \item{rect_text_size}{size of the text in the rectangles}
 
-\item{rect_text_labels_anchor}{(character) How should rect_text_labels be positioned. In future releases, we might have support for north or south anchors, or for directed positioning (negative down, positive up) etc. For now, only centre is supported.}
+\item{rect_text_labels_anchor}{(character) How should \code{rect_text_labels} be positioned? In future releases, we might have support for north or south anchors, or for directed positioning (negative down, positive up) etc. For now, only centre is supported.}
 
 \item{put_rect_text_outside_when_value_below}{(numeric) the text labels accompanying a rectangle of this height will be placed outside the box: below if it's negative; above if it's positive.}
 
-\item{calc_total}{(logical) should the final pool of the waterfall be calculated (and placed on the chart)}
+\item{calc_total}{(logical, default: \code{FALSE}) should the final pool of the waterfall be calculated (and placed on the chart)}
 
 \item{total_axis_text}{(character) the text appearing on the axis underneath the total rectangle}
 
@@ -43,13 +43,13 @@ waterfall(.data = NULL, values, labels, rect_text_labels = values,
 
 \item{fill_colours}{Colours to be used to fill the rectangles, in order. Disregarded if \code{fill_by_sign} is \code{TRUE} (the default).}
 
-\item{fill_by_sign}{(logical) should positive and negative values each have the same colour?}
+\item{fill_by_sign}{(logical, default: \code{TRUE}) should positive and negative values each have the same colour?}
 
 \item{rect_width}{(numeric) the width of the rectangle, relative to the space between each label factor}
 
-\item{rect_border}{the border around each rectangle. Choose NA if no border is desired.}
+\item{rect_border}{the border around each rectangle. Choose \code{NA} if no border is desired.}
 
-\item{draw_lines}{(logical) should lines be drawn between successive rectangles}
+\item{draw_lines}{(logical, default: \code{TRUE}) should lines be drawn between successive rectangles}
 
 \item{lines_anchors}{a character vector of length two specifying the horizontal placement of the drawn lines relative to the preceding and successive rectangles, respectively}
 
@@ -63,7 +63,7 @@ waterfall(.data = NULL, values, labels, rect_text_labels = values,
 
 \item{print_plot}{(logical) Whether or not the plot should be printed. By default, \code{TRUE}, which means it cannot be assigned.}
 
-\item{ggplot_object_name}{(character) A quoted valid object name to which ggplot layers may be addded after the function has run. Ignored if \code{print} is \code{FALSE}.}
+\item{ggplot_object_name}{(character) A quoted valid object name to which ggplot layers may be added after the function has run. Ignored if \code{print} is \code{FALSE}.}
 }
 \description{
 Create waterfall charts
@@ -76,5 +76,5 @@ waterfall(.data = data.frame(category = letters[1:5],
           fill_by_sign = FALSE)
 }
 \author{
-Based on \code{grattan_waterfall} from the grattanCharts package (\url{https://github.com/HughParsonage/grattanCharts}).
+Based on \code{grattan_waterfall} from the 'grattanCharts' package (\url{https://github.com/HughParsonage/grattanCharts}).
 }

@@ -1,31 +1,31 @@
 #' Create waterfall charts
 #'
 #' @name waterfall
-#' @author Based on \code{grattan_waterfall} from the grattanCharts package (\url{https://github.com/HughParsonage/grattanCharts}).
-#' @param .data a data frame containing two columns, one with the values, the other with the labels
+#' @author Based on \code{grattan_waterfall} from the 'grattanCharts' package (\url{https://github.com/HughParsonage/grattanCharts}).
+#' @param .data a \code{data.frame} containing two columns, one with the values, the other with the labels
 #' @param values a numeric vector making up the heights of the rectangles in the waterfall
 #' @param labels the labels corresponding to each vector, marked on the x-axis
 #' @param rect_text_labels (character) a character vector of the same length as values that are placed on the rectangles
 #' @param rect_text_size size of the text in the rectangles
-#' @param rect_text_labels_anchor (character) How should rect_text_labels be positioned. In future releases, we might have support for north or south anchors, or for directed positioning (negative down, positive up) etc. For now, only centre is supported.
+#' @param rect_text_labels_anchor (character) How should \code{rect_text_labels} be positioned? In future releases, we might have support for north or south anchors, or for directed positioning (negative down, positive up) etc. For now, only centre is supported.
 #' @param put_rect_text_outside_when_value_below (numeric) the text labels accompanying a rectangle of this height will be placed outside the box: below if it's negative; above if it's positive.
-#' @param calc_total (logical) should the final pool of the waterfall be calculated (and placed on the chart)
+#' @param calc_total (logical, default: \code{FALSE}) should the final pool of the waterfall be calculated (and placed on the chart)
 #' @param total_axis_text (character) the text appearing on the axis underneath the total rectangle
 #' @param total_rect_text (character) the text in the middle of the rectangle of the total rectangle
 #' @param total_rect_color the color of the final rectangle
 #' @param total_rect_text_color the color of the final rectangle's label text
 #' @param fill_colours Colours to be used to fill the rectangles, in order. Disregarded if \code{fill_by_sign} is \code{TRUE} (the default).
-#' @param fill_by_sign (logical) should positive and negative values each have the same colour?
+#' @param fill_by_sign (logical, default: \code{TRUE}) should positive and negative values each have the same colour?
 #' @param rect_width (numeric) the width of the rectangle, relative to the space between each label factor
-#' @param rect_border the border around each rectangle. Choose NA if no border is desired.
-#' @param draw_lines (logical) should lines be drawn between successive rectangles
+#' @param rect_border the border around each rectangle. Choose \code{NA} if no border is desired.
+#' @param draw_lines (logical, default: \code{TRUE}) should lines be drawn between successive rectangles
 #' @param linetype the linetype for the draw_lines
 #' @param lines_anchors a character vector of length two specifying the horizontal placement of the drawn lines relative to the preceding and successive rectangles, respectively
 #' @param draw_axis.x (character) one of "none", "behind", "front" whether to draw an x.axis line and whether to draw it behind or in front of the rectangles, default is behind
 #' @param theme_text_family (character) Passed to the \code{text} argument in \code{ggplot2::theme}.
 #' @param scale_y_to_waterfall (logical, default: \code{TRUE}) Should the default range of the y-axis be from the bottom of the lowest pool to the top of the highest? If \code{FALSE}, which was the only option before version 0.1.2, the range of the plot is more balanced around the y-axis.
 #' @param print_plot (logical) Whether or not the plot should be printed. By default, \code{TRUE}, which means it cannot be assigned.
-#' @param ggplot_object_name (character) A quoted valid object name to which ggplot layers may be addded after the function has run. Ignored if \code{print} is \code{FALSE}.
+#' @param ggplot_object_name (character) A quoted valid object name to which ggplot layers may be added after the function has run. Ignored if \code{print} is \code{FALSE}.
 #' @examples
 #' waterfall(values = round(rnorm(5), 1), labels = letters[1:5], calc_total = TRUE)
 #' waterfall(.data = data.frame(category = letters[1:5],
