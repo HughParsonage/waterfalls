@@ -13,6 +13,7 @@
 #' @param total_axis_text (character) the text appearing on the axis underneath the total rectangle
 #' @param total_rect_text (character) the text in the middle of the rectangle of the total rectangle
 #' @param total_rect_color the color of the final rectangle
+#' @param total_rect_border_color the border color of the total rectangle
 #' @param total_rect_text_color the color of the final rectangle's label text
 #' @param fill_colours Colours to be used to fill the rectangles, in order. Disregarded if \code{fill_by_sign} is \code{TRUE} (the default).
 #' @param fill_by_sign (logical, default: \code{TRUE}) should positive and negative values each have the same colour?
@@ -45,6 +46,7 @@ waterfall <- function(.data = NULL,
                       total_axis_text = "Total",
                       total_rect_text = sum(values),
                       total_rect_color = "black",
+                      total_rect_border_color = "black",
                       total_rect_text_color = "white",
                       fill_colours = NULL,
                       fill_by_sign = TRUE,
@@ -248,7 +250,7 @@ waterfall <- function(.data = NULL,
                                xmax = number_of_rectangles + 1 + rect_width/2,
                                ymin = 0,
                                ymax = north_edge[number_of_rectangles],
-                               colour = rect_border,
+                               colour = total_rect_border_color,
                                fill = total_rect_color)  +
       ggplot2::annotate("text",
                         x = number_of_rectangles + 1,

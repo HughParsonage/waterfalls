@@ -17,6 +17,7 @@ waterfall(
   total_axis_text = "Total",
   total_rect_text = sum(values),
   total_rect_color = "black",
+  total_rect_border_color = "black",
   total_rect_text_color = "white",
   fill_colours = NULL,
   fill_by_sign = TRUE,
@@ -54,6 +55,8 @@ waterfall(
 \item{total_rect_text}{(character) the text in the middle of the rectangle of the total rectangle}
 
 \item{total_rect_color}{the color of the final rectangle}
+
+\item{total_rect_border_color}{the border color of the total rectangle}
 
 \item{total_rect_text_color}{the color of the final rectangle's label text}
 
