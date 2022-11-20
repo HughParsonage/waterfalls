@@ -4,17 +4,34 @@
 \alias{waterfall}
 \title{Create waterfall charts}
 \usage{
-waterfall(.data = NULL, values, labels, rect_text_labels = values,
-  rect_text_size = 1, rect_text_labels_anchor = "centre",
+waterfall(
+  .data = NULL,
+  values,
+  labels,
+  rect_text_labels = values,
+  rect_text_size = 1,
+  rect_text_labels_anchor = "centre",
   put_rect_text_outside_when_value_below = 0.05 * (max(cumsum(values)) -
-  min(cumsum(values))), calc_total = FALSE, total_axis_text = "Total",
-  total_rect_text = sum(values), total_rect_color = "black",
-  total_rect_text_color = "white", fill_colours = NULL,
-  fill_by_sign = TRUE, rect_width = 0.7, rect_border = "black",
-  draw_lines = TRUE, lines_anchors = c("right", "left"),
-  linetype = "dashed", draw_axis.x = "behind", theme_text_family = "",
-  scale_y_to_waterfall = TRUE, print_plot = FALSE,
-  ggplot_object_name = "mywaterfall")
+    min(cumsum(values))),
+  calc_total = FALSE,
+  total_axis_text = "Total",
+  total_rect_text = sum(values),
+  total_rect_color = "black",
+  total_rect_border_color = "black",
+  total_rect_text_color = "white",
+  fill_colours = NULL,
+  fill_by_sign = TRUE,
+  rect_width = 0.7,
+  rect_border = "black",
+  draw_lines = TRUE,
+  lines_anchors = c("right", "left"),
+  linetype = "dashed",
+  draw_axis.x = "behind",
+  theme_text_family = "",
+  scale_y_to_waterfall = TRUE,
+  print_plot = FALSE,
+  ggplot_object_name = "mywaterfall"
+)
 }
 \arguments{
 \item{.data}{a \code{data.frame} containing two columns, one with the values, the other with the labels}
@@ -39,6 +56,8 @@ waterfall(.data = NULL, values, labels, rect_text_labels = values,
 
 \item{total_rect_color}{the color of the final rectangle}
 
+\item{total_rect_border_color}{the border color of the total rectangle}
+
 \item{total_rect_text_color}{the color of the final rectangle's label text}
 
 \item{fill_colours}{Colours to be used to fill the rectangles, in order. Disregarded if \code{fill_by_sign} is \code{TRUE} (the default).}
@@ -47,7 +66,7 @@ waterfall(.data = NULL, values, labels, rect_text_labels = values,
 
 \item{rect_width}{(numeric) the width of the rectangle, relative to the space between each label factor}
 
-\item{rect_border}{the border around each rectangle. Choose \code{NA} if no border is desired.}
+\item{rect_border}{the border colour around the rectangles. Provide either a single color, that will be used for each rectangle, or one color for each rectangle. Choose \code{NA} if no border is desired.}
 
 \item{draw_lines}{(logical, default: \code{TRUE}) should lines be drawn between successive rectangles}
 
