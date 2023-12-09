@@ -163,11 +163,11 @@ waterfall <- function(.data = NULL,
   if (!calc_total) {
     p <- 
       if (scale_y_to_waterfall) {
-        ggplot2::ggplot(data.frame(x = c(labels, labels),
+        ggplot2::ggplot(data.frame(x = c(1:length(labels), 1:length(labels)),
                                    y = c(south_edge, north_edge)),
                         ggplot2::aes_string(x = "x", y = "y")) 
       } else {
-        ggplot2::ggplot(data.frame(x = labels, y = values),
+        ggplot2::ggplot(data.frame(x = 1:length(labels), y = values),
                         ggplot2::aes_string(x = "x", y = "y"))
       }
     p <- p +
@@ -176,14 +176,14 @@ waterfall <- function(.data = NULL,
   } else {
     p <-
       if (scale_y_to_waterfall) {
-        ggplot2::ggplot(data.frame(x = c(labels, total_axis_text,
-                                         labels, total_axis_text),
+        ggplot2::ggplot(data.frame(x = c(1:length(labels), total_axis_text,
+                                         1:length(labels), total_axis_text),
                                    y = c(south_edge, north_edge,
                                          south_edge[number_of_rectangles],
                                          north_edge[number_of_rectangles])),
                         ggplot2::aes_string(x = "x", y = "y"))
       } else {
-        ggplot2::ggplot(data.frame(x = c(labels, total_axis_text),
+        ggplot2::ggplot(data.frame(x = c(1:length(labels), total_axis_text),
                                    y = c(values, north_edge[number_of_rectangles])),
                         ggplot2::aes_string(x = "x", y = "y"))
       } 
