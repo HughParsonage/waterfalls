@@ -217,18 +217,33 @@ waterfall <- function(.data = NULL,
   # rect_text_labels
   
   for (i in seq_along(values)){
-    if(abs(values[i]) > put_rect_text_outside_when_value_below){
-      p <- p + ggplot2::annotate("text",
-                                 x = i,
-                                 y = 0.5 * (north_edge[i] + south_edge[i]),
-                                 family = theme_text_family,
-                                 label = ifelse(rect_text_labels[i] == values[i],
-                                                ifelse(values[i] < 0,
-                                                       paste0("\U2212", -1 * values[i]),
-                                                       values[i]),
-                                                rect_text_labels[i]),
-                                 size = rect_text_size/(5/14))
-    } else {
+    if (rect_text_labels_anchor == "centre" || 
+        rect_text_labels_anchor == "center") {
+      if(abs(values[i]) > put_rect_text_outside_when_value_below){
+        p <- p + ggplot2::annotate("text",
+                                   x = i,
+                                   y = 0.5 * (north_edge[i] + south_edge[i]),
+                                   family = theme_text_family,
+                                   label = ifelse(rect_text_labels[i] == values[i],
+                                                  ifelse(values[i] < 0,
+                                                         paste0("\U2212", -1 * values[i]),
+                                                         values[i]),
+                                                  rect_text_labels[i]),
+                                   size = rect_text_size/(5/14))
+      } else {
+        p <- p + ggplot2::annotate("text",
+                                   x = i,
+                                   y = north_edge[i],
+                                   family = theme_text_family,
+                                   label = ifelse(rect_text_labels[i] == values[i],
+                                                  ifelse(values[i] < 0,
+                                                         paste0("\U2212", -1 * values[i]),
+                                                         values[i]),
+                                                  rect_text_labels[i]),
+                                   vjust = ifelse(values[i] >= 0, -0.2, 1.2),
+                                   size = rect_text_size/(5/14))
+      }
+    } else if (rect_text_labels_anchor == "bottom") {
       p <- p + ggplot2::annotate("text",
                                  x = i,
                                  y = north_edge[i],
@@ -238,11 +253,26 @@ waterfall <- function(.data = NULL,
                                                        paste0("\U2212", -1 * values[i]),
                                                        values[i]),
                                                 rect_text_labels[i]),
-                                 vjust = ifelse(values[i] >= 0, -0.2, 1.2),
+                                 vjust = 1.2,
                                  size = rect_text_size/(5/14))
+      
+    } else if (rect_text_labels_anchor == "top") {
+      p <- p + ggplot2::annotate("text",
+                                 x = i,
+                                 y = north_edge[i],
+                                 family = theme_text_family,
+                                 label = ifelse(rect_text_labels[i] == values[i],
+                                                ifelse(values[i] < 0,
+                                                       paste0("\U2212", -1 * values[i]),
+                                                       values[i]),
+                                                rect_text_labels[i]),
+                                 vjust = -0.2,
+                                 size = rect_text_size/(5/14))
+      
+    } else {
+      stop("rect_text_labels_anchor = ", rect_text_labels_anchor[1], ". Only centre, bottom, and top are supported.")
     }
   }
-  
   
   if (calc_total){
     p <- p + ggplot2::annotate("rect",
