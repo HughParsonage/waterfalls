@@ -165,10 +165,10 @@ waterfall <- function(.data = NULL,
       if (scale_y_to_waterfall) {
         ggplot2::ggplot(data.frame(x = c(factor(1:length(labels)), factor(1:length(labels))),
                                    y = c(south_edge, north_edge)),
-                        ggplot2::aes_string(x = "x", y = "y")) 
+                        ggplot2::aes(x = x, y = y))
       } else {
         ggplot2::ggplot(data.frame(x = factor(1:length(labels)), y = values),
-                        ggplot2::aes_string(x = "x", y = "y"))
+                        ggplot2::aes(x = x, y = y))
       }
     p <- p +
       ggplot2::geom_blank() +
@@ -181,12 +181,12 @@ waterfall <- function(.data = NULL,
                                    y = c(south_edge, north_edge,
                                          south_edge[number_of_rectangles],
                                          north_edge[number_of_rectangles])),
-                        ggplot2::aes_string(x = "x", y = "y"))
+                        ggplot2::aes(x = x, y = y))
       } else {
         ggplot2::ggplot(data.frame(x = c(factor(1:length(labels)), total_axis_text),
                                    y = c(values, north_edge[number_of_rectangles])),
-                        ggplot2::aes_string(x = "x", y = "y"))
-      } 
+                        ggplot2::aes(x = x, y = y))
+      }
     p <- p +
       ggplot2::geom_blank() +
       ggplot2::theme(axis.title = ggplot2::element_blank())
