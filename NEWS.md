@@ -5,7 +5,7 @@
 # waterfalls 1.1.0
 
 * Experimental support for `rect_text_labels_anchor`
-* Support for duplicate `labels` tahnks to `gregleleu` (#8)
+* Support for duplicate `labels` thanks to `gregleleu` (#8)
 
 
 # waterfalls 1.0.0
