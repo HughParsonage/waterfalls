@@ -1,7 +1,11 @@
+# waterfalls 1.1.1
+
+* Replace usage of deprecated `ggplot2::aes_string()` with `ggplot2::aes()` to maintain compatibility with current ggplot2 releases.
+
 # waterfalls 1.1.0
 
 * Experimental support for `rect_text_labels_anchor`
-* Support for duplicate `labels` tahnks to `gregleleu` (#8)
+* Support for duplicate `labels` thanks to `gregleleu` (#8)
 
 
 # waterfalls 1.0.0
