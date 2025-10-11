@@ -1,3 +1,7 @@
+# waterfalls 1.1.2
+
+* Silence CRAN check notes by registering `x` and `y` as globals for ggplot aesthetics.
+
 # waterfalls 1.1.1
 
 * Replace usage of deprecated `ggplot2::aes_string()` with `ggplot2::aes()` to maintain compatibility with current ggplot2 releases.

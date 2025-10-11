@@ -36,6 +36,9 @@
 #' @export
 
 
+utils::globalVariables(c("x", "y"))
+
+
 waterfall <- function(.data = NULL,
                       values, labels,
                       rect_text_labels = values,
