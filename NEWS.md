@@ -1,4 +1,4 @@
-# waterfalls 1.1.1
+# waterfalls 1.1.4
 
 * Replace usage of deprecated `ggplot2::aes_string()` with `ggplot2::aes()` to maintain compatibility with current ggplot2 releases.
 
